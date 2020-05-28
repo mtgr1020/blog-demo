@@ -2,11 +2,143 @@
 <html>
 
 <head>
+    <title>全屏滚动</title>
+    <!-- 
+        如果不使用 vite 请记得切换路径
+        <link rel="stylesheet" type="text/css" href="../assets/css/global.css" />
+     -->
+    <link rel="stylesheet" type="text/css" href="/css-example/assets/css/global.css" />
+    <style>
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
 
+        #pureFullPage {
+            /* 只有当 position 的值不是 static 时，top 值才有效 */
+            position: relative;
+            /* 设置初始值 */
+            top: 0;
+            transition: all 1000ms ease;
+            touch-action: none;
+        }
+
+        .page {
+            /* 此处不能为 100vh，后面详述 */
+            /* 其父元素，也就是 #pureFullPage 的高度，通过 js 动态设置*/
+            height: 100%;
+        }
+    </style>
 </head>
 
 <body>
+    <div id="pureFullPage">
+        <div class="page" style="background-color:#34f;">1</div>
+        <div class="page" style="background-color:#3f3;">2</div>
+        <div class="page" style="background-color:#f43;">3</div>
+    </div>
+    <script>
+        // 代码来自 https://github.com/xiaogliu/pure-full-page
+        const container = document.querySelector('#pureFullPage');
+        const viewHeight = document.documentElement.clientHeight;
+        const pages = document.querySelectorAll('.page');
+        const pagesNum = pages.length;
+        let currentPosition = 0;
 
+        container.style.height = viewHeight + 'px';
+
+        const handleMouseWheel = throttle(scrollMouse, this, 1000);
+
+        // 鼠标滚轮监听，火狐鼠标滚动事件不同其他
+        if (navigator.userAgent.toLowerCase().indexOf('firefox') === -1) {
+            document.addEventListener('mousewheel', handleMouseWheel);
+        } else {
+            document.addEventListener('DOMMouseScroll', handleMouseWheel);
+        }
+
+
+        function scrollMouse(event) {
+            let delta = getWheelDelta(event);
+            // delta < 0，鼠标往前滚动，页面向下滚动
+            if (delta < 0) {
+                goDown();
+            } else {
+                goUp();
+            }
+        }
+        // 鼠标滚轮事件
+        function getWheelDelta(event) {
+            if (event.wheelDelta) {
+                return event.wheelDelta;
+            } else {
+                // 兼容火狐
+                return -event.detail;
+            }
+        }
+
+        function goUp() {
+            // 只有页面顶部还有页面时页面向上滚动
+            if (-container.offsetTop >= viewHeight) {
+                // 重新指定当前页面距视图顶部的距离 currentPosition，实现全屏滚动，
+                // currentPosition 为负值，越大表示超出顶部部分越少
+                currentPosition = currentPosition + viewHeight;
+                turnPage(currentPosition);
+            }
+        }
+        function goDown() {
+            // 只有页面底部还有页面时页面向下滚动
+            if (-container.offsetTop <= viewHeight * (pagesNum - 2)) {
+                // 重新指定当前页面距视图顶部的距离 currentPosition，实现全屏滚动，
+                // currentPosition 为负值，越小表示超出顶部部分越多
+                currentPosition = currentPosition - viewHeight;
+                turnPage(currentPosition);
+            }
+        }
+
+        function turnPage(height) {
+            container.style.top = `${height}px`;
+        }
+        // 截流函数，method 回调函数，context 上下文，delay 延迟函数，
+        // 返回的是一个函数
+        function throttle(method, context, delay) {
+            let wait = false;
+            return function (...args) {
+                if (!wait) {
+                    method.apply(context, args);
+                    wait = true;
+                    setTimeout(() => {
+                        wait = false;
+                    }, delay);
+                }
+            };
+        }
+
+        // 手机触屏屏幕
+        let startY = 0
+        document.addEventListener('touchstart', event => {
+            startY = event.touches[0].pageY;
+        });
+        const handleTouchEnd = throttle(this.touchEnd, this, 500);
+        document.addEventListener('touchend', handleTouchEnd);
+        document.addEventListener('touchmove', event => {
+            event.preventDefault();
+        });
+
+        // 触屏事件
+        function touchEnd(event) {
+            const endY = event.changedTouches[0].pageY;
+            if (endY - startY < 0) {
+                // 手指向上滑动，对应页面向下滚动
+                this.goDown();
+            } else {
+                // 手指向下滑动，对应页面向上滚动
+                this.goUp();
+            }
+        }
+
+    </script>
 </body>
 
 </html>
