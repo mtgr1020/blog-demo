@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>demo-文本溢出省略号...</title>
+    <style>
+        p {
+            max-width: 200px;
+        }
+
+        .single {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .multiple {
+            height: 3em;
+            line-height: 1.5em;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .multiple::after {
+            position: absolute;
+            content: "...";
+            bottom: 0;
+            right: 0;
+            background-color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <p class="single">你好我在测试文本太长会不会省略</p>
+
+        <p class="multiple">刚刚那个是单行元素,我们现在要在测试一下多行的会怎么样呢?</p>
+    </div>
+
+</body>
+
+</html>

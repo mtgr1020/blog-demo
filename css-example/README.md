@@ -1,2 +1,3 @@
 filter 
 pureFullPage - - - 简易全屏滚动demo
+text-overflow - - - css实现文本过长省略...

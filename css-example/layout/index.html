@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>demo-常见的几种布局</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .g-1-float {
+            height: 100px;
+        }
+
+        .g-1-left {
+            float: left;
+            width: 100px;
+            height: 100px;
+            background: tomato;
+        }
+
+        .g-1-center {
+            height: 100px;
+            background: lightgreen;
+            /*
+            * 很多案例都是使用 左右margin但是不知道为什么我右边的总是会沉下去😭
+            * margin-left: 100px;
+            * margin-right: 200px;
+            */
+            float: left;
+            width: calc(100% - 300px);
+        }
+
+        .g-1-right {
+            float: right;
+            width: 200px;
+            height: 100px;
+            background: gold;
+        }
+
+        .g-2-flex {
+            display: flex;
+            height: 100px;
+        }
+
+        .g-2-left {
+            flex-basis: 200px;
+            background-color: darkturquoise
+        }
+
+        .g-2-center {
+            flex: auto;
+            background-color: lightpink;
+        }
+
+        .g-2-right {
+            flex-basis: 100px;
+            background-color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="g-1-float">
+        <div class="g-1-left">1</div>
+        <div class="g-1-center">2</div>
+        <div class="g-1-right">3</div>
+    </div>
+
+    <div class="g-2-flex">
+        <div class="g-2-left">4</div>
+        <div class="g-2-center">5</div>
+        <div class="g-2-right">6</div>
+    </div>
+</body>
+
+</html>
