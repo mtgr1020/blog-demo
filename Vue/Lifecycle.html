@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Vue 生命周期测试</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <span v-bind:title="message">a的值{{a}},</span>
+        b的值{{b}}
+        <todo-item v-for="item in groceryList" v-bind:todo="item" v-bind:key="item.id"></todo-item>
+    </div>
+    <script>
+        var data = {
+            a: 1,
+            message: '测试一个bind',
+            groceryList: [
+                { id: 0, text: '蔬菜' },
+                { id: 1, text: '奶酪' },
+            ]
+        }
+        Vue.component('todo-item', {
+            props: ['todo'],
+            beforeCreate() {
+                console.log('todo-item模版 beforeCreate')
+            },
+            created() {
+                console.log('todo-item模版 created')
+            },
+            beforeMount() {
+                console.log('todo-item模版 beforeMounted')
+            },
+            mounted() {
+                console.log('todo-item模版 mounted')
+            },
+            template: '<li>{{ todo.text }}</li>'
+        })
+        var vm = new Vue({
+            el: "#app",
+            data: data,
+            computed: {
+                b() {
+                    return 2 * this.a
+                }
+            },
+            watch: {
+                a: 'handler'
+            },
+            methods: {
+                handler(val, oldVal) {
+                    console.log('执行watch,新的值是' + val)
+                }
+            },
+            // 可以看到$data 还没有绑定
+            beforeCreate: function () {
+                console.log('root模版 beforeCreate', this.$data)
+            },
+            // 执行Observe Data、Init Event
+            // created函数中的数据已经有 __ob__ 属性,劫持了get、set 添加收集器dep
+            created: function () {
+                console.log('root模版 created', this.$data)
+            },
+            // 这个阶段 数据为完成模版同步 $el中还是 {{a}}
+            beforeMount: function () {
+                console.log('root模版 beforeMount', this.$el)
+            },
+            // 这个阶段将数据替换 页面上已经是完成后内容
+            mounted: function () {
+                console.log('root模版 mounted', this.$el)
+                setTimeout(() => { this.$data.a = 2 }, 1000)
+                setTimeout(() => {
+                    this.$data.groceryList.push({
+                        id: 2,
+                        text: '水果'
+                    })
+                }, 2000)
+            },
+            // 我们经过上边的setTimeout可以测试出,在beforeUpdate前,$el已经改变了
+            // 但是并没有render 还存在与 Virtual DOM 中
+            beforeUpdate: function () {
+                console.log('root模版 ' + '执行了beforeUpdate')
+                console.log(this.$el)
+            },
+            updated: function () {
+                console.log('root模版 ' + '执行了updated')
+                console.log('- - - - - - - - - - - - - - - -')
+            }
+        })
+
+    </script>
+</body>
+
+</html>
