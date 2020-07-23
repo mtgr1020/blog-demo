@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>实现Promise</title>
+</head>
+
+<body>
+    <div>
+
+    </div>
+    <script src="./MyPromise.js"></script>
+    <script>
+        var p1 = MyPromise.resolve({
+            then: function (onFulfill, onReject) {
+                console.log('mb1')
+                onFulfill("fulfilled!");
+            }
+        });
+        console.log(p1 instanceof MyPromise) // true, 这是一个Promise对象
+
+        p1.then(function (v) {
+            console.log('mb2')
+            console.log(v); // 输出"fulfilled!"
+        }, function (e) {
+            // 不会被调用
+        });
+    </script>
+</body>
+
+</html>
