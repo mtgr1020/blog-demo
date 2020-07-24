@@ -209,3 +209,11 @@ MyPromise.all = function (promises) {
     })
 
 }
+
+Promise.race = function (promises) {
+    return new Promise((resolve, reject) => {
+        promises.forEach((promise, index) => {
+            promise.then(resolve, reject);
+        });
+    });
+}
