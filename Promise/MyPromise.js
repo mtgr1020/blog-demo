@@ -17,28 +17,27 @@ function MyPromise(fn) {
         if (value instanceof MyPromise) {
             return value.then(resolve, reject)
         }
-        // 当value是 thenale对象时, Promise.resolve会将对象转换成Promise对象
-        // 然后立即执行thenable的then方法 还需要优化
-        if (typeof value === 'object' && typeof value.then === 'function') {
-            return that.then(value.then(resolve))
-        }
-        // 
         setTimeout(() => {
-            that.status = RESOLVED;
-            that.value = value;
-            that.resolvedCallbacks.forEach(cb => {
-                cb(that.value)
-            });
+            // 判断状态防止重复向回调数组中添加
+            if (that.status === PENDING) {
+                that.status = RESOLVED;
+                that.value = value;
+                that.resolvedCallbacks.forEach(cb => {
+                    cb(that.value)
+                });
+            }
         }, 0)
 
     }
     function reject(value) {
         setTimeout(() => {
-            that.status = REJECTED;
-            that.value = value;
-            that.rejectedCallbacks.forEach(cb => {
-                cb(that.value)
-            });
+            if (that.status === PENDING) {
+                that.status = REJECTED;
+                that.value = value;
+                that.rejectedCallbacks.forEach(cb => {
+                    cb(that.value)
+                });
+            }
         }, 0)
     }
     try {
@@ -57,7 +56,7 @@ function resolvePrimise(promise, x, resolve, reject) {
         const error = new TypeError('Chaining cycle detected for promise #<MyPromise>')
         return reject(error)
     }
-
+    let called = false; // 避免多次调用
     if (x !== null && (typeof x === 'object' || typeof x === 'function')) {
         try {
             let then = x.then
@@ -65,9 +64,13 @@ function resolvePrimise(promise, x, resolve, reject) {
                 then.call(
                     x,
                     y => {
+                        if (called) return;
+                        called = true;
                         resolvePrimise(promise, y, resolve, reject)
                     },
                     e => {
+                        if (called) return;
+                        called = true;
                         reject(e)
                     }
                 )
@@ -75,6 +78,8 @@ function resolvePrimise(promise, x, resolve, reject) {
                 resolve(x)
             }
         } catch (error) {
+            if (called) return;
+            called = true;
             reject(error)
         }
     } else {
@@ -136,6 +141,10 @@ MyPromise.prototype.then = function (onFulfilled, onRejected) {
     }
 }
 
+MyPromise.prototype.catch = function (onRejected) {
+    return this.then(null, onRejected)
+}
+
 MyPromise.resolve = function (value) {
     /**
      * 当使用 Promise.resolve() 一个Promise的时候会返回这个实例
@@ -153,7 +162,50 @@ MyPromise.resolve = function (value) {
     if (value instanceof MyPromise) {
         return value
     }
+    /* 当value是 thenale对象时, Promise.resolve会将对象转换成Promise对象
+    * 然后立即执行thenable的then方法 
+    * 目前这么写有个执行顺序的问题 then里面的方法正常应落后与平台任务
+    */
+    if (typeof value === 'object' && typeof value.then === 'function') {
+        return new MyPromise(value.then)
+    }
     return new MyPromise((resolve) => {
         resolve(value)
     })
+}
+
+MyPromise.reject = function (reason) {
+    return new MyPromise((resolve, reject) => {
+        reject(reason)
+    })
+}
+/**
+  * 在Promise all 当检测到对象不存在iterator会返回一个Promise对象
+  * 当对象没有捕获错误时会抛出(未实现) 捕获会执行reject
+  */
+MyPromise.all = function (promises) {
+
+    if (typeof promises[Symbol.iterator] !== 'function') {
+        return MyPromise.reject(
+            new TypeError('object is not iterable (cannot read property Symbol(Symbol.iterator))')
+        )
+    }
+
+    return new MyPromise((resolve, reject) => {
+        const len = promises.length;
+        const values = new Array(len);
+        promises.forEach((promise, index) => {
+            if (promise instanceof MyPromise) {
+                promise.then((value) => {
+                    values[index] = value;
+                    index === (len - 1) && resolve(values)
+                }, reject)
+            } else {
+                values[index] = promise;
+                index === (len - 1) && resolve(values)
+            }
+
+        })
+    })
+
 }
