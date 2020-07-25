@@ -2,7 +2,7 @@
  * 在Promise中有三种状态,先定义出来
  */
 const PENDING = "pending";
-const RESOLVED = "resolved";
+const RESOLVED = "fulfilled";
 const REJECTED = "rejected";
 
 function MyPromise(fn) {

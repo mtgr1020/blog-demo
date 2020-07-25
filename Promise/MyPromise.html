@@ -9,20 +9,9 @@
     <div>
 
     </div>
-    <script src="./MyPromise.js"></script>
+    <script src="./_promise.js"></script>
     <script>
-        var mixedPromisesArray = [MyPromise.resolve(33), MyPromise.reject(44)];
-        var p = MyPromise.all(mixedPromisesArray);
-        console.log(p);
-        setTimeout(function () {
-            console.log('the stack is now empty');
-            console.log(p);
-        });
 
-// logs
-// Promise { <state>: "pending" } 
-// the stack is now empty
-// Promise { <state>: "rejected", <reason>: 44 }
 
     </script>
 </body>
