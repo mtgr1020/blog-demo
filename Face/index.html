@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>face detection</title>
+</head>
+
+<body>
+    <div>
+        <video id="video" width="400" height="300" autoplay></video>
+        <button onclick="startRealDetect()">开始实时检测</button>
+        <div id="elapsed_time" style="margin-top:20px"></div>
+        <div id="elapsed_result" style="margin-top:20px"></div>
+    </div>
+    <script src="./ccv.js"></script>
+    <script src="./face.js"></script>
+    <script>
+        var startRealDetect = function () {
+            navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+                var video = document.getElementById('video')
+                if ("srcObject" in video) {
+                    video.srcObject = stream;
+                } else {
+                    video.src = window.URL.createObjectURL(stream);
+                }
+                video.addEventListener('play', timer)
+            })
+        }
+        var c = document.createElement("canvas");
+        var timer = function () {
+            var v = document.getElementById('video')
+            var ctx = c.getContext('2d');
+            var height = v.videoHeight;
+            var width = v.videoWidth;
+            c.height = height
+            c.width = width
+            ctx.drawImage(v, 0, 0, width, height)
+            detection(c)
+            setTimeout(timer, 100)
+        }
+
+        var detection = function (image) {
+            // var canvas = document.getElementById("output");
+            // var ctx = canvas.getContext("2d");
+            /* call main detect_objects function */
+            var elapsed_time = (new Date()).getTime();
+            var comp = ccv.detect_objects({
+                "canvas": ccv.grayscale(ccv.pre(image)),
+                "cascade": cascade,
+                "interval": 5,
+                "min_neighbors": 1
+            });
+            document.getElementById("elapsed_time").innerHTML = "检测图片耗时" + ((new Date()).getTime() - elapsed_time).toString() + "ms";
+            document.getElementById("elapsed_result").innerHTML = "检测图片结果: " + (comp.length ? '有人脸' : "没人脸");
+            // resizeCanvas(image, canvas);
+            // ctx.drawImage(image, 0, 0);
+            // ctx.lineWidth = 3;
+            // ctx.strokeStyle = "#f00";
+            // /* draw detected area */
+            // for (var i = 0; i < comp.length; i++)
+            //     ctx.strokeRect(comp[i].x, comp[i].y, comp[i].width, comp[i].height);
+        }
+
+        // function resizeCanvas(image, canvas) {
+        //     document.body.appendChild(image);
+        //     canvas.width = image.offsetWidth;
+        //     canvas.style.width = image.offsetWidth.toString() + "px";
+        //     canvas.height = image.offsetHeight;
+        //     canvas.style.height = image.offsetHeight.toString() + "px";
+        //     document.body.removeChild(image);
+        // }
+    </script>
+</body>
+
+</html>

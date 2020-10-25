@@ -1,0 +1,22 @@
+{
+  "name": "face-detection",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/vsptpm/face-detection.git"
+  },
+  "author": "vs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vsptpm/face-detection/issues"
+  },
+  "homepage": "https://github.com/vsptpm/face-detection#readme",
+  "dependencies": {
+    "face-api.js": "^0.22.2"
+  }
+}

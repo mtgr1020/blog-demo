@@ -10,6 +10,7 @@
     <div id="app">
         <span v-bind:title="message">a的值{{a}},</span>
         b的值{{b}}
+        <p>{{ testMethodCompute() }}</p>
         <todo-item v-for="item in groceryList" v-bind:todo="item" v-bind:key="item.id"></todo-item>
     </div>
     <script>
@@ -34,6 +35,7 @@
             },
             mounted() {
                 console.log('todo-item模版 mounted')
+                console.log(this)
             },
             template: '<li>{{ todo.text }}</li>'
         })
@@ -51,6 +53,9 @@
             methods: {
                 handler(val, oldVal) {
                     console.log('执行watch,新的值是' + val)
+                },
+                testMethodCompute() {
+                    return this.a * 10
                 }
             },
             // 可以看到$data 还没有绑定

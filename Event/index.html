@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Event</title>
+  </head>
+  <body>
+    <div style="padding: 20px">
+      <button>点击</button>
+    </div>
+
+    <script>
+      document
+        .getElementsByTagName("button")[0]
+        .addEventListener("click", handleButtonClick);
+      document
+        .getElementsByTagName("div")[0]
+        .addEventListener("click", handleDivClick);
+      function handleButtonClick(e) {
+        e.cancelBubble = true; // 阻止事件继续冒泡s
+        // e.stopPropagation(); // 阻止事件继续冒泡
+        console.log("altKey " + e.altKey); // 是否按住alt健
+        console.log("bubbles " + e.bubbles); // 是否在Dom中冒泡
+        console.log("button " + e.button); // 按下的鼠标
+        console.log("buttons " + e.buttons); // 按下的鼠标
+        console.log("cancelBubble " + e.cancelBubble); // 按下的鼠标
+        console.log("cancelable  " + e.cancelable); // 事件是否可以取消
+        console.log("clientX  " + e.clientX); // 鼠标指针在点击元素（DOM）中的X坐标。
+        console.log("clientY  " + e.clientY); // 鼠标指针在点击元素（DOM）中的Y坐标。
+        console.log(e.currentTarget); // 对事件当前注册的目标的引用
+        console.log("detail  " + e.detail); // 点击数
+        console.log("fromElement  " + e.fromElement); //
+        console.log("layerX  " + e.layerX); //
+        console.log("layerY  " + e.layerY); //
+        console.log(e); // 按下的鼠标
+      }
+      function handleDivClick() {
+        // console.log("handleDivClick");
+        document.getElementsByTagName("button")[0].click();
+      }
+    </script>
+  </body>
+</html>

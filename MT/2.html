@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Q2</title>
+    <style>
+        /* 1 布局实现
+        屏幕宽度>1024px时，6列等分布局
+        屏幕宽度<=1024px时，3列等分布局
+
+        2 功能实现
+        点击任意一个child 元素，输出被点击的是第几个child（不允许变动原本的DOM结构） */
+        .parent {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .child {
+            width: 16.6%;
+            height: 200px;
+            background-color: brown;
+            box-sizing: border-box;
+            border: 1px solid #ffee55;
+        }
+
+        @media screen and (max-width: 1024px) {
+            .child {
+                width: 33.3%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="parent">
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+        <div class="child"></div>
+    </div>
+
+    <script>
+        // 这题思路就是并不能考虑事件委托,不然没法通过父元素找到
+        // 那只能通过循环子元素来做到 
+        document.querySelectorAll('.child').forEach((el, index) => {
+            el.onclick = function () {
+                console.log(index + 1)
+            }
+        });
+
+    </script>
+</body>
+
+</html>
