@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=s, initial-scale=1.0">
+    <title>延迟脚本测试</title>
+</head>
+<body>
+    <script defer src="./defer.js"></script>
+    <script defer >
+        alert('defer2')
+    </script>
+    <script async src="./async.js"></script>
+    <!-- <script async>
+        alert('async')
+    </script> -->
+
+    <script>
+        for(var i=0;i<10000;i++){
+            console.log(i)
+        }
+        alert('script')
+    </script>
+
+    <script>
+        window.onload = function(){
+            alert('load')
+        }
+    </script>
+</body>
+</html>
