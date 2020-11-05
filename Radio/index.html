@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio 标签</title>
+    <style>
+        .radio{
+            opacity: 0;
+        }
+        .mock-radio{
+            position: relative;
+        }
+        .mock-radio::before{
+            content: "";
+            position: absolute;
+            left: -25px;
+            width: 20px;
+            height: 20px;
+            background: url(./radio2.svg);
+            background-size: 100% 100%;
+        }
+        .radio:checked + .mock-radio::before{
+             background: url(./radio1.svg);
+             background-size: 100% 100%;
+        }
+    </style>
+</head>
+<body>
+    <input id="radio1" type="radio" class="radio" name="pay" />
+    <label for="radio1" class="mock-radio">
+        微信支付
+    </label>
+    <input id="radio2" type="radio" class="radio" name="pay" />
+    <label for="radio2" class="mock-radio">
+        支付宝
+    </label>
+    
+</body>
+</html>
