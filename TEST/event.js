@@ -23,5 +23,3 @@ var obj = {
 obj.d();
 obj.c();
 obj.b();
-
-// 0  4    'c' undefined  undefined window 3 1
