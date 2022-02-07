@@ -53,4 +53,4 @@ function addSleep(obj) {
 
 let mo = addSleep(o)
 
-mo.sleep(1).foo().boo()
+mo.sleep(3).foo().boo()

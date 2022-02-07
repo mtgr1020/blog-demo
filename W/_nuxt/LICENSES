@@ -1,0 +1,158 @@
+/*!
+     * Programatically add the following
+     */
+
+/*!
+  * vue-router v3.4.9
+  * (c) 2020 Evan You
+  * @license MIT
+  */
+
+/*!
+  {
+    "name": "Webp",
+    "async": true,
+    "property": "webp",
+    "caniuse": "webp",
+    "tags": ["image"],
+    "builderAliases": ["img_webp"],
+    "authors": ["Krister Kari", "@amandeep", "Rich Bradshaw", "Ryan Seddon", "Paul Irish"],
+    "notes": [{
+      "name": "Webp Info",
+      "href": "https://developers.google.com/speed/webp/"
+    }, {
+      "name": "Chromium blog - Chrome 32 Beta: Animated WebP images and faster Chrome for Android touch input",
+      "href": "https://blog.chromium.org/2013/11/chrome-32-beta-animated-webp-images-and.html"
+    }, {
+      "name": "Webp Lossless Spec",
+      "href": "https://developers.google.com/speed/webp/docs/webp_lossless_bitstream_specification"
+    }, {
+      "name": "Article about WebP support",
+      "href": "https://optimus.keycdn.com/support/webp-support/"
+    }, {
+      "name": "Chromium WebP announcement",
+      "href": "https://blog.chromium.org/2011/11/lossless-and-transparency-encoding-in.html?m=1"
+    }]
+  }
+  !*/
+
+/*!
+ * The buffer module from node.js, for the browser.
+ *
+ * @author   Feross Aboukhadijeh <http://feross.org>
+ * @license  MIT
+ */
+
+/*!
+ * Vue-Lazyload.js v1.2.3
+ * (c) 2018 Awe <hilongjw@gmail.com>
+ * Released under the MIT License.
+ */
+
+/*!
+ * Vue.js v2.6.12
+ * (c) 2014-2020 Evan You
+ * Released under the MIT License.
+ */
+
+/*!
+ * cookie
+ * Copyright(c) 2012-2014 Roman Shtylman
+ * Copyright(c) 2015 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+
+/*!
+ * modernizr v3.11.4
+ * Build https://modernizr.com/download?-webp-setclasses-dontmin
+ *
+ * Copyright (c)
+ *  Faruk Ates
+ *  Paul Irish
+ *  Alex Sexton
+ *  Ryan Seddon
+ *  Patrick Kettner
+ *  Stu Cox
+ *  Richard Herrera
+ *  Veeck
+
+ * MIT License
+ */
+
+/*!
+ * vue-awesome-swiper v4.1.1
+ * Copyright (c) Surmon. All rights reserved.
+ * Released under the MIT License.
+ * Surmon <https://github.com/surmon-china>
+ */
+
+/*!
+ * vue-client-only v2.0.0
+ * (c) 2019-present egoist <0x142857@gmail.com>
+ * Released under the MIT License.
+ */
+
+/*!
+ * vue-no-ssr v1.1.1
+ * (c) 2018-present egoist <0x142857@gmail.com>
+ * Released under the MIT License.
+ */
+
+/*!
+ * vuex v3.6.0
+ * (c) 2020 Evan You
+ * @license MIT
+ */
+
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
+
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */
+
+/*! @name aes-decrypter @version 3.1.2 @license Apache-2.0 */
+
+/*! @name m3u8-parser @version 4.7.0 @license Apache-2.0 */
+
+/*! @name mpd-parser @version 0.17.0 @license Apache-2.0 */
+
+/*! @name pkcs7 @version 1.0.4 @license Apache-2.0 */
+
+/*! @preserve
+ * numeral.js
+ * version : 2.0.6
+ * author : Adam Draper
+ * license : MIT
+ * http://adamwdraper.github.com/Numeral-js/
+ */
+
+/*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
+
+/**
+   * @license
+   * slighly modified parse-headers 2.0.2 <https://github.com/kesla/parse-headers/>
+   * Copyright (c) 2014 David Björklund
+   * Available under the MIT license
+   * <https://github.com/kesla/parse-headers/blob/master/LICENCE>
+   */
+
+/**
+ * @license
+ * Video.js 7.14.3 <http://videojs.com/>
+ * Copyright Brightcove, Inc. <https://www.brightcove.com/>
+ * Available under Apache License Version 2.0
+ * <https://github.com/videojs/video.js/blob/main/LICENSE>
+ *
+ * Includes vtt.js <https://github.com/mozilla/vtt.js>
+ * Available under Apache License Version 2.0
+ * <https://github.com/mozilla/vtt.js/blob/main/LICENSE>
+ */

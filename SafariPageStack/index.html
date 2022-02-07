@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="count"></div>
+  <button onclick='handleClick()'>测试按钮</button>
+  <script>
+
+    // document.addEventListener('visibilitychange', () => {
+    //     alert(document.visibilityState)
+    // })
+
+    // window.onload = function (){
+    //   alert('load')
+    // }
+
+    //  window.onpageshow = function (event) {
+    //    alert(event.persisted)
+    //   };
+
+    const countEl = document.querySelector('#count');
+
+    function handleClick(){
+      var otherWindow = window.open('/SafariPageStack/index2.html');
+      otherWindow.addEventListener("message", receiveMessage, false);
+      // window.addEventListener("message", receiveMessage, false);
+      // var count = 0
+      // setInterval(()=>{
+      //   countEl.innerText = count++
+      // },1000)
+    }
+    
+    // let count = 0;
+    // (()=>{
+    //   setInterval(()=>{
+    //     countEl.innerText = count++
+    //   },1000)
+    // })()
+   
+
+    function receiveMessage(event) {
+      var data = event.data;
+      countEl.innerText = data
+    }
+
+      
+  </script>
+</body>
+</html>

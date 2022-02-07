@@ -5,26 +5,27 @@
  *
  */
 
-[
-  { key: a, pre: h, next: b },
-  { key: b, pre: a, next: null },
-  { key: c, pre: b, next: null },
-];
+// [
+//   { key: a, pre: h, next: b },
+//   { key: b, pre: a, next: null },
+//   { key: c, pre: b, next: null },
+// ];
 
 const parse = function (array) {
   return array
     .reduce((pre, curr) => {
       const currArray = curr.split("/");
       currArray.forEach((el, index) => {
-        let matFlag = true;
+        console.log(el)
+        let matFlag = false;
         pre.forEach((item) => {
           if (item.key == el) {
             item.pre = currArray[index - 1];
             item.next = currArray[index + 1];
-          } else {
-            matFlag = false;
+            matFlag = true;
           }
         });
+        console.log(matFlag)
         if (!matFlag) {
           pre.push({
             key: el,
@@ -34,6 +35,11 @@ const parse = function (array) {
           matFlag = true;
         }
       });
+      return pre
     }, [])
     .filter((item) => item.pre === undefined);
 };
+
+const r = parse(['a/b', 'b/c/', 'h/a/e'])
+
+console.log(r)

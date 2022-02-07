@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue3和2常用的改动</title>
+    <style>
+      *{
+        padding: 0;
+        margin: 0;
+      }
+      html,body,.page{
+        height: 100%;
+      }
+      .page {
+        display: flex;
+      }
+      .page-left {
+        flex-basis: 360px;
+        background-color: rgb(45, 58, 58);
+        color: white;
+        box-sizing: content-box;
+        padding: 26px;
+        font-size: 18px;
+      }
+      li{
+        margin: 20px 0;
+        cursor:pointer;
+      }
+      .page-right{
+        flex-grow: 1;
+        box-sizing: content-box;
+        padding: 26px;
+        max-height: 100%;
+        overflow: auto;
+      }
+      pre {
+        display: none;
+      }
+      code{
+        display: block;
+        max-width: 1250px;
+        white-space: pre-wrap;
+        background-color: black;
+        color: aliceblue;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="page-left">
+        <ul>
+          <li data-id="ifandfor">v-if和v-for的优先级</li>
+          <li data-id="model">v-model用法更改</li>
+          <li data-id="bind">v-bind合并行为</li>
+          <li data-id="native">移除v-on.native修饰符</li>
+        </ul>
+      </div>
+      <div class="page-right">
+        <pre id="ifandfor">
+  Vue2编译结果
+          <code>
+  &lt;div&gt;
+    &lt;li v-for="todo in todos" v-if="!todo.isComplete"&gt;
+      {{ todo.name }}
+    &lt;/li&gt;
+  &lt;/div&gt;
+          </code>
+          <code>
+  function render() {
+    with(this) {
+      return _c('div', _l((todos), function (todo) {
+        return (!todo.isComplete) ? _c('li', [_v("\n  " + _s(todo.name) +
+          "\n")]) : _e()
+      }), 0)
+    }
+  }
+          </code>
+  Vue3编译结果
+          <code>
+  &lt;li v-for="todo in todos" v-if="!todo.isComplete"&gt;
+    {{ todo.name }}
+  &lt;/li&gt;
+          </code>
+          <code>
+  import { renderList as _renderList, Fragment as _Fragment, openBlock as _openBlock, createElementBlock as _createElementBlock, toDisplayString as _toDisplayString, createCommentVNode as _createCommentVNode } from "vue"
+
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (!_ctx.todo.isComplete)
+      ? (_openBlock(true), _createElementBlock(_Fragment, { key: 0 }, _renderList(_ctx.todos, (todo) => {
+          return (_openBlock(), _createElementBlock("li", null, _toDisplayString(todo.name), 1 /* TEXT */))
+        }), 256 /* UNKEYED_FRAGMENT */))
+      : _createCommentVNode("v-if", true)
+  }
+          </code>
+        </pre>
+        <pre id="model">
+          <code>
+  &lt;ChildComponent v-model="pageTitle" /&gt;
+          </code>
+  Vue2编译结果
+          <code>
+  function render() {
+    with(this) {
+      return _c('ChildComponent', {
+        model: {
+          value: (pageTitle),
+          callback: function ($$v) {
+            pageTitle = $$v
+          },
+          expression: "pageTitle"
+        }
+      })
+    }
+  }
+          </code>
+  Vue3编译结果
+  <code>
+  import { resolveComponent as _resolveComponent, openBlock as _openBlock, createBlock as _createBlock } from "vue"
+
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_ChildComponent = _resolveComponent("ChildComponent")
+
+    return (_openBlock(), _createBlock(_component_ChildComponent, {
+      modelValue: _ctx.pageTitle,
+      "onUpdate:modelValue": $event => ((_ctx.pageTitle) = $event)
+    }, null, 8 /* PROPS */, ["modelValue", "onUpdate:modelValue"]))
+  }
+  </code>
+  <code>
+    &lt;ChildComponent v-model:title="pageTitle" v-model:content="pageContent" /&gt;
+  </code>
+  <code>
+    export function render(_ctx, _cache, $props, $setup, $data, $options) {
+      const _component_ChildComponent = _resolveComponent("ChildComponent")
+    
+      return (_openBlock(), _createBlock(_component_ChildComponent, {
+        title: _ctx.pageTitle,
+        "onUpdate:title": $event => ((_ctx.pageTitle) = $event),
+        content: _ctx.pageContent,
+        "onUpdate:content": $event => ((_ctx.pageContent) = $event)
+      }, null, 8 /* PROPS */, ["title", "onUpdate:title", "content", "onUpdate:content"]))
+    }
+  </code>        
+        </pre>
+
+        <pre id="bind">
+          <code>
+  &lt;div id="red" v-bind="{ id: 'blue' }"&gt;&lt;/div&gt;
+          </code>
+  Vue2编译结果
+  <code>
+  function render() {
+    with(this) {
+      return _c('div', _b({
+        attrs: {
+          "id": "red"
+        }
+      }, 'div', {
+        id: 'blue'
+      }, false))
+    }
+  }
+  </code>
+  Vue3编译结果
+  <code>
+  import { mergeProps as _mergeProps, openBlock as _openBlock, createElementBlock as _createElementBlock } from "vue"
+
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createElementBlock("div", _mergeProps({ id: "red" }, { id: 'blue' }), null, 16 /* FULL_PROPS */))
+  }
+  </code>
+
+  如果你依赖 v-bind 的覆盖功能，目前的建议是确保在独立 attribute 之前定义 v-bind attribute。
+        </pre>
+
+        <pre id="native">
+          <code>
+  &lt;my-component
+    v-on:close="handleComponentEvent"
+    v-on:click.native="handleNativeClickEvent"
+  /&gt;
+          </code>
+  Vue2编译结果
+  <code>
+  function render() {
+    with(this) {
+      return _c('my-component', {
+        on: {
+          "close": handleComponentEvent
+        },
+        nativeOn: {
+          "click": function ($event) {
+            return handleNativeClickEvent.apply(null, arguments)
+          }
+        }
+      })
+    }
+  }
+  </code>
+  Vue3编译结果
+  <code>
+  import { resolveComponent as _resolveComponent, openBlock as _openBlock, createBlock as _createBlock } from "vue"
+
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_my_component = _resolveComponent("my-component")
+  
+    return (_openBlock(), _createBlock(_component_my_component, {
+      onClose: _ctx.handleComponentEvent,
+      onClick: _ctx.handleNativeClickEvent
+    }, null, 8 /* PROPS */, ["onClose", "onClick"]))
+  }
+  </code>
+  思考:
+  <code>
+  &lt;template&gt;
+    &lt;button v-on:click="$emit('click', $event)"&gt;OK&lt;/button&gt;
+  &lt;/template&gt;
+  </code>
+        </pre>
+      </div>
+    </div>
+
+    <script>
+      document.querySelectorAll("li").forEach((element) =>
+        element.addEventListener("click", (e) => {
+          document
+            .querySelectorAll("pre")
+            .forEach((pre) => (pre.style.display = "none"))
+          document.querySelector(`#${e.target.dataset.id}`).style.display =
+            "block"
+        })
+      )
+    </script>
+  </body>
+</html>

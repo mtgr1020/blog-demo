@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>小程序webview demo</title>
+    <style>
+      *[id~="login"] {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="login">已登录</div>
+    <button id="notlogin" onclick="handleLogin()">登录</button>
+    <!-- <button onclick="checkEnv()">环境</button> -->
+    <button onclick="addHistory()">增加页面历史</button>
+    <button onclick="back()">回退所有历史</button>
+    
+    <script>
+      function getQueryStringByName(name) {
+        var result = location.search.match(
+          new RegExp("[\?\&]" + name + "=([^\&]+)", "i")
+        )
+        if (result == null || result.length < 1) {
+          return ""
+        }
+        return result[1]
+      }
+
+      function changeLoginStatus(status) {
+        document.querySelector(`#${status ? "" : "not"}login`).style.cssText = "display:block;"
+      }
+
+      function handleLogin() {
+        wx.miniProgram.navigateTo({ url: "/packageMine/loginWeapp/index" })
+      }
+
+      function initShareContent() {
+        wx.miniProgram.postMessage({
+          data: {
+            title: "测试标题",
+          },
+        })
+      }
+
+      const inMini = () => {
+        let flag = false
+
+        function ready() {
+          flag = window.__wxjs_environment === 'miniprogram'
+        }
+        if (!window.WeixinJSBridge || !WeixinJSBridge.invoke) {
+          document.addEventListener('WeixinJSBridgeReady', ready, false)
+        } else {
+          ready()
+        }
+
+        wx.miniProgram.getEnv(function(res) {
+          flag = res.miniprogram
+        })
+
+        return flag
+      } 
+
+      const checkEnv = ()=>{
+        alert(inMini())
+      }
+
+      function addHistory(){
+        window.history.pushState({},'')
+      }
+
+      function back(){
+        wx.miniProgram.navigateBack()
+      }
+
+      window.onload = function () {
+        const userId = getQueryStringByName("userId")
+        changeLoginStatus(!!userId)
+        initShareContent()
+        // checkEnv()
+      }
+    </script>
+    <script
+      type="text/javascript"
+      src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"
+    ></script>
+  </body>
+</html>

@@ -18,6 +18,10 @@
   },
   "homepage": "https://github.com/mtgr1020/blog-demo#readme",
   "dependencies": {
-    "vite": "^0.17.0"
+    "koa": "^2.13.1",
+    "vite": "^2.1.5"
+  },
+  "devDependencies": {
+    "eslint": "^7.24.0"
   }
 }

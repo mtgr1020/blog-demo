@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>css 布局</title>
+  <style>
+    :root{
+      box-sizing: border-box;
+    }
+    *,
+    ::after,
+    ::before{
+      box-sizing: inherit;
+    }
+
+    body{
+      background-color: #eee;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    header{
+      color: #fff;
+      background-color: #0072b0;
+      border-radius: .5em;
+    }
+
+    main{
+      display: block;
+    }
+
+    .main{
+      background-color: #fff;
+      border-radius: .5em;
+    }
+
+    .aside{
+      padding: 1.5em;
+      background-color: #fff;
+      border-radius: .5em;
+    }
+  </style>
+
+  <!-- <style>
+    .main{
+      width: 70%;
+      float: left;
+    }
+
+    .aside{
+      margin-left: 1.5em;
+      width: calc(30% - 1.5em);
+      float: right;
+    }
+  </style> -->
+  <style>
+    .container{
+      display: flex;
+    }
+
+    .main{
+      width: 70%;
+    }
+
+    .aside{
+      width: 30%;
+      margin-left: 1.5em;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Frame Sub</h1>
+  </header>
+
+  <div class="container">
+    <main class="main">
+      <h2>Come jion us</h2>
+      <p>That clue is worker for meet at 6:00am. so i do at you place</p>
+    </main>
+    <aside class="aside">
+      <div>瞎写的也不知道是啥</div>
+      <div>就是测试一下双栏布局</div>
+    </aside>
+  </div>
+</body>
+</html>

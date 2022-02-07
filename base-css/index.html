@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        font-size: 100px;
+      }
+      .container {
+        padding-top: 200px;
+        text-align: center;
+      }
+      .preview {
+        display: inline-block;
+        background-color: rgb(241, 6, 6);
+        color: #fff;
+        font-size: 16px;
+        border-radius: 2em;
+        padding: 1em;
+      }
+
+      ul {
+        font-size: 0.8em;
+      }
+      ul ul {
+        font-size: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="preview">新年快乐</div>
+      <div></div>
+      <button onClick="addFontsize()">放大</button>
+    </div>
+
+    <ul>
+      10
+      <ul>
+        11
+        <ul>
+          12
+          <ul>
+            13
+          </ul>
+        </ul>
+      </ul>
+    </ul>
+
+    <script>
+      let size = 16
+      function addFontsize() {
+        document.querySelector(".preview").style.fontSize = `${size++}px`
+      }
+    </script>
+  </body>
+</html>

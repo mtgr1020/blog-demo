@@ -1,78 +1,172 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>demo-常见的几种布局</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
     <style>
-        html,
-        body {
-            margin: 0;
-            padding: 0;
+        .outer,
+        .left,
+        .middle,
+        .right {
+            height: 100px;
+            margin-bottom: 5px;
         }
 
-        .g-1-float {
-            height: 100px;
-        }
-
-        .g-1-left {
-            float: left;
-            width: 100px;
-            height: 100px;
+        .left {
             background: tomato;
         }
 
-        .g-1-center {
-            height: 100px;
+        .middle {
             background: lightgreen;
-            /*
-            * 很多案例都是使用 左右margin但是不知道为什么我右边的总是会沉下去😭
-            * margin-left: 100px;
-            * margin-right: 200px;
-            */
-            float: left;
-            width: calc(100% - 300px);
         }
 
-        .g-1-right {
-            float: right;
-            width: 200px;
-            height: 100px;
+        .right {
             background: gold;
         }
 
-        .g-2-flex {
+        /* 左右分别设置绝对定位 中间设置外边距 */
+        .outer1 {
+            position: relative;
+        }
+
+        .outer1 .left {
+            position: absolute;
+            width: 100px;
+        }
+
+        .outer1 .middle {
+            margin: 0 200px 0 100px;
+        }
+
+        .outer1 .right {
+            position: absolute;
+            width: 200px;
+            top: 0;
+            right: 0;
+        }
+
+        /* flex 布局 */
+        .outer2 {
             display: flex;
-            height: 100px;
         }
 
-        .g-2-left {
-            flex-basis: 200px;
-            background-color: darkturquoise
+        .outer2 .left {
+            flex: 0 0 100px;
         }
 
-        .g-2-center {
+        .outer2 .middle {
             flex: auto;
-            background-color: lightpink;
         }
 
-        .g-2-right {
-            flex-basis: 100px;
-            background-color: green;
+        .outer2 .right {
+            flex: 0 0 200px;
+        }
+
+        /* 浮动布局 但是 html 中 middle要放到最后 */
+        .outer3 .left {
+            float: left;
+            width: 100px;
+        }
+
+        .outer3 .right {
+            float: right;
+            width: 200px;
+        }
+
+        .outer3 .middle {
+            margin: 0 200px 0 100px;
+        }
+
+        /* 圣杯布局 */
+        .outer4 {
+            padding-left: 100px;
+            padding-right: 200px;
+        }
+
+        .outer4 .left {
+            position: relative;
+            left: -100px;
+
+            float: left;
+            margin-left: -100%;
+
+            width: 100px;
+        }
+
+        .outer4 .right {
+            position: relative;
+            left: 200px;
+
+            float: left;
+            margin-left: -200px;
+
+            width: 200px;
+        }
+
+        .outer4 .middle {
+            float: left;
+            width: 100%;
+        }
+
+
+        /* 双飞翼布局 */
+        .outer5 .left {
+            float: left;
+            margin-left: -100%;
+
+            width: 100px;
+        }
+
+        .outer5 .right {
+            float: left;
+            margin-left: -200px;
+
+            width: 200px;
+        }
+
+        .outer5 .wrapper {
+            float: left;
+            width: 100%;
+        }
+
+        .outer5 .middle {
+            margin-left: 100px;
+            margin-right: 200px;
         }
     </style>
 </head>
+<!-- 三栏布局 左右固定 中间自适应 -->
 
 <body>
-    <div class="g-1-float">
-        <div class="g-1-left">1</div>
-        <div class="g-1-center">2</div>
-        <div class="g-1-right">3</div>
+    <div class="outer outer1">
+        <div class="left">1-left</div>
+        <div class="middle">1-middle</div>
+        <div class="right">1-right</div>
     </div>
-
-    <div class="g-2-flex">
-        <div class="g-2-left">4</div>
-        <div class="g-2-center">5</div>
-        <div class="g-2-right">6</div>
+    <div class="outer outer2">
+        <div class="left">2-left</div>
+        <div class="middle">2-middle</div>
+        <div class="right">2-right</div>
+    </div>
+    <div class="outer outer3">
+        <div class="left">3-left</div>
+        <div class="right">3-right</div>
+        <div class="middle">3-middle</div>
+    </div>
+    <div class="outer outer4">
+        <div class="middle">圣杯-middle</div>
+        <div class="left">圣杯-left</div>
+        <div class="right">圣杯-right</div>
+    </div>
+    <div class="outer outer5">
+        <div class="wrapper">
+            <div class="middle">圣杯-middle</div>
+        </div>
+        <div class="left">圣杯-left</div>
+        <div class="right">圣杯-right</div>
     </div>
 </body>
 
